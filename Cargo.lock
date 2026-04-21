@@ -7,8 +7,13 @@ name = "clamp_range"
 version = "0.1.0"
 
 [[package]]
+name = "num_traits"
+version = "0.1.0"
+
+[[package]]
 name = "urectanc"
 version = "0.1.0"
 dependencies = [
  "clamp_range",
+ "num_traits",
 ]

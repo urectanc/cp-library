@@ -12,6 +12,7 @@ rust-version = "1.89"
 
 [workspace.dependencies]
 clamp_range = { path = "./crates/urectanc/clamp_range" }
+num_traits = { path = "./crates/urectanc/num_traits" }
 
 [package]
 name = "urectanc"
@@ -24,3 +25,4 @@ rust-version.workspace = true
 
 [dependencies]
 clamp_range.workspace = true
+num_traits.workspace = true
