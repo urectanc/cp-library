@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      RUST_BACKTRACE: full
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@1.89.0
+        with:
+          components: clippy, rustfmt
+
+      - name: cargo check
+        run: cargo check --workspace
+
+      - name: cargo fmt
+        run: cargo fmt --all -- --check
+
+      - name: cargo clippy
+        run: cargo clippy --workspace --all-targets -- -D warnings
+
+      - name: cargo test
+        run: cargo test --workspace --no-fail-fast
