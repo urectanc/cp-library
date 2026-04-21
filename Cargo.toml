@@ -15,6 +15,7 @@ algebra = { path = "./crates/urectanc/algebra" }
 binary_indexed_tree = { path = "./crates/urectanc/binary_indexed_tree" }
 clamp_range = { path = "./crates/urectanc/clamp_range" }
 num_traits = { path = "./crates/urectanc/num_traits" }
+segment_tree = { path = "./crates/urectanc/segment_tree" }
 
 [package]
 name = "urectanc"
@@ -30,3 +31,4 @@ algebra.workspace = true
 binary_indexed_tree.workspace = true
 clamp_range.workspace = true
 num_traits.workspace = true
+segment_tree.workspace = true
