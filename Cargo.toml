@@ -11,6 +11,7 @@ repository = "https://github.com/urectanc/cp-library"
 rust-version = "1.89"
 
 [workspace.dependencies]
+clamp_range = { path = "./crates/urectanc/clamp_range" }
 
 [package]
 name = "urectanc"
@@ -22,3 +23,4 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+clamp_range.workspace = true

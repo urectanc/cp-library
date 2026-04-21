@@ -3,5 +3,12 @@
 version = 4
 
 [[package]]
-name = "cp-library"
+name = "clamp_range"
 version = "0.1.0"
+
+[[package]]
+name = "urectanc"
+version = "0.1.0"
+dependencies = [
+ "clamp_range",
+]
