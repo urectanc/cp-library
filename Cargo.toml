@@ -14,6 +14,7 @@ rust-version = "1.89"
 algebra = { path = "./crates/urectanc/algebra" }
 binary_indexed_tree = { path = "./crates/urectanc/binary_indexed_tree" }
 clamp_range = { path = "./crates/urectanc/clamp_range" }
+lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 
@@ -30,5 +31,6 @@ rust-version.workspace = true
 algebra.workspace = true
 binary_indexed_tree.workspace = true
 clamp_range.workspace = true
+lazy_segment_tree.workspace = true
 num_traits.workspace = true
 segment_tree.workspace = true

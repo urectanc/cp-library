@@ -19,6 +19,14 @@ name = "clamp_range"
 version = "0.1.0"
 
 [[package]]
+name = "lazy_segment_tree"
+version = "0.1.0"
+dependencies = [
+ "algebra",
+ "clamp_range",
+]
+
+[[package]]
 name = "num_traits"
 version = "0.1.0"
 
@@ -37,6 +45,7 @@ dependencies = [
  "algebra",
  "binary_indexed_tree",
  "clamp_range",
+ "lazy_segment_tree",
  "num_traits",
  "segment_tree",
 ]
