@@ -3,6 +3,14 @@
 version = 4
 
 [[package]]
+name = "binary_indexed_tree"
+version = "0.1.0"
+dependencies = [
+ "clamp_range",
+ "num_traits",
+]
+
+[[package]]
 name = "clamp_range"
 version = "0.1.0"
 
@@ -14,6 +22,7 @@ version = "0.1.0"
 name = "urectanc"
 version = "0.1.0"
 dependencies = [
+ "binary_indexed_tree",
  "clamp_range",
  "num_traits",
 ]
