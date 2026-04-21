@@ -39,6 +39,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "sliding_window_aggregation"
+version = "0.1.0"
+dependencies = [
+ "algebra",
+]
+
+[[package]]
 name = "urectanc"
 version = "0.1.0"
 dependencies = [
@@ -48,4 +55,5 @@ dependencies = [
  "lazy_segment_tree",
  "num_traits",
  "segment_tree",
+ "sliding_window_aggregation",
 ]

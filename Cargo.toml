@@ -17,6 +17,7 @@ clamp_range = { path = "./crates/urectanc/clamp_range" }
 lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
+sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 
 [package]
 name = "urectanc"
@@ -34,3 +35,4 @@ clamp_range.workspace = true
 lazy_segment_tree.workspace = true
 num_traits.workspace = true
 segment_tree.workspace = true
+sliding_window_aggregation.workspace = true

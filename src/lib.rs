@@ -4,3 +4,4 @@ pub use clamp_range;
 pub use lazy_segment_tree;
 pub use num_traits;
 pub use segment_tree;
+pub use sliding_window_aggregation;
