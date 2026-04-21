@@ -11,6 +11,7 @@ repository = "https://github.com/urectanc/cp-library"
 rust-version = "1.89"
 
 [workspace.dependencies]
+algebra = { path = "./crates/urectanc/algebra" }
 binary_indexed_tree = { path = "./crates/urectanc/binary_indexed_tree" }
 clamp_range = { path = "./crates/urectanc/clamp_range" }
 num_traits = { path = "./crates/urectanc/num_traits" }
@@ -25,6 +26,7 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+algebra.workspace = true
 binary_indexed_tree.workspace = true
 clamp_range.workspace = true
 num_traits.workspace = true

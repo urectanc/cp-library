@@ -3,6 +3,10 @@
 version = 4
 
 [[package]]
+name = "algebra"
+version = "0.1.0"
+
+[[package]]
 name = "binary_indexed_tree"
 version = "0.1.0"
 dependencies = [
@@ -22,6 +26,7 @@ version = "0.1.0"
 name = "urectanc"
 version = "0.1.0"
 dependencies = [
+ "algebra",
  "binary_indexed_tree",
  "clamp_range",
  "num_traits",
