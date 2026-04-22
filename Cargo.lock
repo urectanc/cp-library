@@ -61,6 +61,10 @@ name = "mo"
 version = "0.1.0"
 
 [[package]]
+name = "modint"
+version = "0.1.0"
+
+[[package]]
 name = "num_traits"
 version = "0.1.0"
 
@@ -93,6 +97,7 @@ dependencies = [
  "lazy_segment_tree",
  "low_link",
  "mo",
+ "modint",
  "num_traits",
  "segment_tree",
  "sliding_window_aggregation",
