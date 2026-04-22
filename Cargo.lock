@@ -84,6 +84,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "polynomial"
+version = "0.1.0"
+dependencies = [
+ "modint",
+ "number_theoretic_transform",
+]
+
+[[package]]
 name = "segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -116,6 +124,7 @@ dependencies = [
  "montgomery",
  "num_traits",
  "number_theoretic_transform",
+ "polynomial",
  "segment_tree",
  "sliding_window_aggregation",
 ]

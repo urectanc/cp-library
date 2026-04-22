@@ -25,6 +25,7 @@ modint = { path = "./crates/urectanc/modint" }
 montgomery = { path = "./crates/urectanc/montgomery" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 number_theoretic_transform = { path = "./crates/urectanc/number_theoretic_transform" }
+polynomial = { path = "./crates/urectanc/polynomial" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 
@@ -52,5 +53,6 @@ modint.workspace = true
 montgomery.workspace = true
 num_traits.workspace = true
 number_theoretic_transform.workspace = true
+polynomial.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true
