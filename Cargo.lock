@@ -31,6 +31,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "interval_set"
+version = "0.1.0"
+dependencies = [
+ "clamp_range",
+]
+
+[[package]]
 name = "lazy_segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -66,6 +73,7 @@ dependencies = [
  "cartesian_tree",
  "clamp_range",
  "disjoint_sparse_table",
+ "interval_set",
  "lazy_segment_tree",
  "num_traits",
  "segment_tree",
