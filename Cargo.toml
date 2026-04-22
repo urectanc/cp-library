@@ -15,6 +15,7 @@ algebra = { path = "./crates/urectanc/algebra" }
 binary_indexed_tree = { path = "./crates/urectanc/binary_indexed_tree" }
 cartesian_tree = { path = "./crates/urectanc/cartesian_tree" }
 clamp_range = { path = "./crates/urectanc/clamp_range" }
+disjoint_sparse_table = { path = "./crates/urectanc/disjoint_sparse_table" }
 lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
@@ -34,6 +35,7 @@ algebra.workspace = true
 binary_indexed_tree.workspace = true
 cartesian_tree.workspace = true
 clamp_range.workspace = true
+disjoint_sparse_table.workspace = true
 lazy_segment_tree.workspace = true
 num_traits.workspace = true
 segment_tree.workspace = true

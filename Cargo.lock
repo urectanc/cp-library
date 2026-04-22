@@ -23,6 +23,14 @@ name = "clamp_range"
 version = "0.1.0"
 
 [[package]]
+name = "disjoint_sparse_table"
+version = "0.1.0"
+dependencies = [
+ "algebra",
+ "clamp_range",
+]
+
+[[package]]
 name = "lazy_segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -57,6 +65,7 @@ dependencies = [
  "binary_indexed_tree",
  "cartesian_tree",
  "clamp_range",
+ "disjoint_sparse_table",
  "lazy_segment_tree",
  "num_traits",
  "segment_tree",
