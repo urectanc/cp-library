@@ -2,6 +2,7 @@ pub use algebra;
 pub use binary_indexed_tree;
 pub use cartesian_tree;
 pub use clamp_range;
+pub use compressed_sparse_row;
 pub use disjoint_sparse_table;
 pub use interval_set;
 pub use lazy_segment_tree;

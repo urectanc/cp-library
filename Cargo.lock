@@ -23,6 +23,10 @@ name = "clamp_range"
 version = "0.1.0"
 
 [[package]]
+name = "compressed_sparse_row"
+version = "0.1.0"
+
+[[package]]
 name = "disjoint_sparse_table"
 version = "0.1.0"
 dependencies = [
@@ -72,6 +76,7 @@ dependencies = [
  "binary_indexed_tree",
  "cartesian_tree",
  "clamp_range",
+ "compressed_sparse_row",
  "disjoint_sparse_table",
  "interval_set",
  "lazy_segment_tree",
