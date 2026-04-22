@@ -76,6 +76,14 @@ name = "num_traits"
 version = "0.1.0"
 
 [[package]]
+name = "number_theoretic_transform"
+version = "0.1.0"
+dependencies = [
+ "modint",
+ "montgomery",
+]
+
+[[package]]
 name = "segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -107,6 +115,7 @@ dependencies = [
  "modint",
  "montgomery",
  "num_traits",
+ "number_theoretic_transform",
  "segment_tree",
  "sliding_window_aggregation",
 ]
