@@ -22,6 +22,7 @@ lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 low_link = { path = "./crates/urectanc/low_link" }
 mo = { path = "./crates/urectanc/mo" }
 modint = { path = "./crates/urectanc/modint" }
+montgomery = { path = "./crates/urectanc/montgomery" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
@@ -47,6 +48,7 @@ lazy_segment_tree.workspace = true
 low_link.workspace = true
 mo.workspace = true
 modint.workspace = true
+montgomery.workspace = true
 num_traits.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true

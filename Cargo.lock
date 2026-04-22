@@ -65,6 +65,13 @@ name = "modint"
 version = "0.1.0"
 
 [[package]]
+name = "montgomery"
+version = "0.1.0"
+dependencies = [
+ "modint",
+]
+
+[[package]]
 name = "num_traits"
 version = "0.1.0"
 
@@ -98,6 +105,7 @@ dependencies = [
  "low_link",
  "mo",
  "modint",
+ "montgomery",
  "num_traits",
  "segment_tree",
  "sliding_window_aggregation",
