@@ -13,5 +13,6 @@ pub use montgomery;
 pub use num_traits;
 pub use number_theoretic_transform;
 pub use polynomial;
+pub use prime;
 pub use segment_tree;
 pub use sliding_window_aggregation;

@@ -92,6 +92,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "prime"
+version = "0.1.0"
+
+[[package]]
 name = "segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -125,6 +129,7 @@ dependencies = [
  "num_traits",
  "number_theoretic_transform",
  "polynomial",
+ "prime",
  "segment_tree",
  "sliding_window_aggregation",
 ]
