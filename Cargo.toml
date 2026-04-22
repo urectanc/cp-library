@@ -20,6 +20,7 @@ disjoint_sparse_table = { path = "./crates/urectanc/disjoint_sparse_table" }
 interval_set = { path = "./crates/urectanc/interval_set" }
 lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 low_link = { path = "./crates/urectanc/low_link" }
+mo = { path = "./crates/urectanc/mo" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
@@ -43,6 +44,7 @@ disjoint_sparse_table.workspace = true
 interval_set.workspace = true
 lazy_segment_tree.workspace = true
 low_link.workspace = true
+mo.workspace = true
 num_traits.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true
