@@ -15,6 +15,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "cartesian_tree"
+version = "0.1.0"
+
+[[package]]
 name = "clamp_range"
 version = "0.1.0"
 
@@ -51,6 +55,7 @@ version = "0.1.0"
 dependencies = [
  "algebra",
  "binary_indexed_tree",
+ "cartesian_tree",
  "clamp_range",
  "lazy_segment_tree",
  "num_traits",
