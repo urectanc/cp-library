@@ -28,6 +28,7 @@ number_theoretic_transform = { path = "./crates/urectanc/number_theoretic_transf
 polynomial = { path = "./crates/urectanc/polynomial" }
 prime = { path = "./crates/urectanc/prime" }
 rerooting = { path = "./crates/urectanc/rerooting" }
+rolling_hash = { path = "./crates/urectanc/rolling_hash" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 
@@ -58,5 +59,6 @@ number_theoretic_transform.workspace = true
 polynomial.workspace = true
 prime.workspace = true
 rerooting.workspace = true
+rolling_hash.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true

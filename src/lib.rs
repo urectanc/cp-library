@@ -15,5 +15,6 @@ pub use number_theoretic_transform;
 pub use polynomial;
 pub use prime;
 pub use rerooting;
+pub use rolling_hash;
 pub use segment_tree;
 pub use sliding_window_aggregation;

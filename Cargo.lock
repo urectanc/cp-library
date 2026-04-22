@@ -103,6 +103,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "rolling_hash"
+version = "0.1.0"
+dependencies = [
+ "clamp_range",
+]
+
+[[package]]
 name = "segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -138,6 +145,7 @@ dependencies = [
  "polynomial",
  "prime",
  "rerooting",
+ "rolling_hash",
  "segment_tree",
  "sliding_window_aggregation",
 ]
