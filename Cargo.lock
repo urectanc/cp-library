@@ -50,6 +50,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "low_link"
+version = "0.1.0"
+dependencies = [
+ "compressed_sparse_row",
+]
+
+[[package]]
 name = "num_traits"
 version = "0.1.0"
 
@@ -80,6 +87,7 @@ dependencies = [
  "disjoint_sparse_table",
  "interval_set",
  "lazy_segment_tree",
+ "low_link",
  "num_traits",
  "segment_tree",
  "sliding_window_aggregation",
