@@ -27,6 +27,7 @@ num_traits = { path = "./crates/urectanc/num_traits" }
 number_theoretic_transform = { path = "./crates/urectanc/number_theoretic_transform" }
 polynomial = { path = "./crates/urectanc/polynomial" }
 prime = { path = "./crates/urectanc/prime" }
+rerooting = { path = "./crates/urectanc/rerooting" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 
@@ -56,5 +57,6 @@ num_traits.workspace = true
 number_theoretic_transform.workspace = true
 polynomial.workspace = true
 prime.workspace = true
+rerooting.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true

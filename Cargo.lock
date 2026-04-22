@@ -96,6 +96,13 @@ name = "prime"
 version = "0.1.0"
 
 [[package]]
+name = "rerooting"
+version = "0.1.0"
+dependencies = [
+ "compressed_sparse_row",
+]
+
+[[package]]
 name = "segment_tree"
 version = "0.1.0"
 dependencies = [
@@ -130,6 +137,7 @@ dependencies = [
  "number_theoretic_transform",
  "polynomial",
  "prime",
+ "rerooting",
  "segment_tree",
  "sliding_window_aggregation",
 ]
