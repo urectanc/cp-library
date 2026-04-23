@@ -4,6 +4,7 @@ pub use cartesian_tree;
 pub use clamp_range;
 pub use compressed_sparse_row;
 pub use disjoint_sparse_table;
+pub use fast_io;
 pub use interval_set;
 pub use lazy_segment_tree;
 pub use low_link;

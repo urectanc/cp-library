@@ -35,6 +35,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "fast_io"
+version = "0.1.0"
+
+[[package]]
 name = "interval_set"
 version = "0.1.0"
 dependencies = [
@@ -138,6 +142,7 @@ dependencies = [
  "clamp_range",
  "compressed_sparse_row",
  "disjoint_sparse_table",
+ "fast_io",
  "interval_set",
  "lazy_segment_tree",
  "low_link",
