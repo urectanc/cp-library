@@ -1,8 +1,7 @@
 use compressed_sparse_row::CSRArray;
 
 pub struct LowLink {
-    parent: Vec<usize>,
-    dfs_order: Vec<usize>,
+    dfs_order: Vec<(usize, usize)>,
     index: Vec<usize>,
     low: Vec<usize>,
 }
@@ -14,56 +13,45 @@ impl LowLink {
             CSRArray::new(n, &edges)
         };
 
-        let mut parent = vec![!0; n];
         let mut dfs_order = Vec::with_capacity(n);
         let mut index = vec![!0; n];
+        let mut low = vec![!0; n];
         let mut stack = vec![];
 
         for root in 0..n {
-            if parent[root] != !0 {
+            if index[root] != !0 {
                 continue;
             }
 
             stack.push((root, !0));
             while let Some((current, prev)) = stack.pop() {
                 if index[current] != !0 {
+                    let (u, v) = if index[prev] < index[current] {
+                        (current, prev)
+                    } else {
+                        (prev, current)
+                    };
+                    low[u] = low[u].min(index[v]);
                     continue;
                 }
 
-                parent[current] = prev;
                 index[current] = dfs_order.len();
-                dfs_order.push(current);
+                low[current] = index[current];
+                dfs_order.push((current, prev));
 
                 for &next in &graph[current] {
-                    if next != prev {
+                    if next != prev && next != current {
                         stack.push((next, current));
                     }
                 }
             }
         }
 
-        let mut used = vec![false; n];
-        let mut low = index.clone();
-        for &(mut u, mut v) in edges {
-            if index[u] < index[v] {
-                std::mem::swap(&mut u, &mut v);
-            }
-            if parent[u] == v && !used[u] {
-                used[u] = true;
-            } else {
-                low[u] = low[u].min(index[v]);
-            }
-        }
-
-        for &v in dfs_order.iter().rev() {
-            let p = parent[v];
-            if p != !0 {
-                low[p] = low[p].min(low[v]);
-            }
+        for &(v, p) in dfs_order.iter().filter(|&&(_, p)| p != !0).rev() {
+            low[p] = low[p].min(low[v]);
         }
 
         Self {
-            parent,
             dfs_order,
             index,
             low,
@@ -82,12 +70,12 @@ impl LowLink {
         let mut id = vec![!0; n];
         let mut current_id = 0;
 
-        for &v in &self.dfs_order {
+        for &(v, p) in &self.dfs_order {
             if self.low[v] == self.index[v] {
                 id[v] = current_id;
                 current_id += 1;
             } else {
-                id[v] = id[self.parent[v]];
+                id[v] = id[p];
             }
         }
 
@@ -107,11 +95,7 @@ impl LowLink {
         let mut components = vec![];
         let mut seen = vec![false; n];
 
-        for &v in &self.dfs_order {
-            let p = self.parent[v];
-            if p == !0 {
-                continue;
-            }
+        for &(v, p) in self.dfs_order.iter().filter(|&&(_, p)| p != !0) {
             if self.index[p] <= self.low[v] {
                 id[v] = current_id;
                 components.push((current_id, p));
