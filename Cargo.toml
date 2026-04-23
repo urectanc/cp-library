@@ -31,6 +31,7 @@ rerooting = { path = "./crates/urectanc/rerooting" }
 rolling_hash = { path = "./crates/urectanc/rolling_hash" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
+suffix_array = { path = "./crates/urectanc/suffix_array" }
 
 [package]
 name = "urectanc"
@@ -62,3 +63,4 @@ rerooting.workspace = true
 rolling_hash.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true
+suffix_array.workspace = true

@@ -18,3 +18,4 @@ pub use rerooting;
 pub use rolling_hash;
 pub use segment_tree;
 pub use sliding_window_aggregation;
+pub use suffix_array;
