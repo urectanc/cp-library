@@ -171,4 +171,12 @@ dependencies = [
  "sliding_window_aggregation",
  "suffix_array",
  "union_find",
+ "wavelet_matrix",
+]
+
+[[package]]
+name = "wavelet_matrix"
+version = "0.1.0"
+dependencies = [
+ "clamp_range",
 ]

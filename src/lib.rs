@@ -22,3 +22,4 @@ pub use segment_tree;
 pub use sliding_window_aggregation;
 pub use suffix_array;
 pub use union_find;
+pub use wavelet_matrix;

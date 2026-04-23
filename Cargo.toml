@@ -35,6 +35,7 @@ segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 suffix_array = { path = "./crates/urectanc/suffix_array" }
 union_find = { path = "./crates/urectanc/union_find" }
+wavelet_matrix = { path = "./crates/urectanc/wavelet_matrix" }
 
 [package]
 name = "urectanc"
@@ -70,3 +71,4 @@ segment_tree.workspace = true
 sliding_window_aggregation.workspace = true
 suffix_array.workspace = true
 union_find.workspace = true
+wavelet_matrix.workspace = true
