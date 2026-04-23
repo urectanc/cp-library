@@ -5,6 +5,7 @@ pub use clamp_range;
 pub use compressed_sparse_row;
 pub use disjoint_sparse_table;
 pub use fast_io;
+pub use heavy_light_decomposition;
 pub use interval_set;
 pub use lazy_segment_tree;
 pub use low_link;

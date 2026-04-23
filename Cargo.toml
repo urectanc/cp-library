@@ -18,6 +18,7 @@ clamp_range = { path = "./crates/urectanc/clamp_range" }
 compressed_sparse_row = { path = "./crates/urectanc/compressed_sparse_row" }
 disjoint_sparse_table = { path = "./crates/urectanc/disjoint_sparse_table" }
 fast_io = { path = "./crates/urectanc/fast_io" }
+heavy_light_decomposition = { path = "./crates/urectanc/heavy_light_decomposition" }
 interval_set = { path = "./crates/urectanc/interval_set" }
 lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 low_link = { path = "./crates/urectanc/low_link" }
@@ -54,6 +55,7 @@ clamp_range.workspace = true
 compressed_sparse_row.workspace = true
 disjoint_sparse_table.workspace = true
 fast_io.workspace = true
+heavy_light_decomposition.workspace = true
 interval_set.workspace = true
 lazy_segment_tree.workspace = true
 low_link.workspace = true
