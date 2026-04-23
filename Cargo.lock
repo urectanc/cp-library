@@ -96,6 +96,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "potentialized_union_find"
+version = "0.1.0"
+dependencies = [
+ "algebra",
+]
+
+[[package]]
 name = "prime"
 version = "0.1.0"
 
@@ -156,6 +163,7 @@ dependencies = [
  "num_traits",
  "number_theoretic_transform",
  "polynomial",
+ "potentialized_union_find",
  "prime",
  "rerooting",
  "rolling_hash",
