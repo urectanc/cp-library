@@ -33,6 +33,7 @@ rolling_hash = { path = "./crates/urectanc/rolling_hash" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 suffix_array = { path = "./crates/urectanc/suffix_array" }
+union_find = { path = "./crates/urectanc/union_find" }
 
 [package]
 name = "urectanc"
@@ -66,3 +67,4 @@ rolling_hash.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true
 suffix_array.workspace = true
+union_find.workspace = true

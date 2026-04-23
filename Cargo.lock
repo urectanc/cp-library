@@ -133,6 +133,10 @@ name = "suffix_array"
 version = "0.1.0"
 
 [[package]]
+name = "union_find"
+version = "0.1.0"
+
+[[package]]
 name = "urectanc"
 version = "0.1.0"
 dependencies = [
@@ -158,4 +162,5 @@ dependencies = [
  "segment_tree",
  "sliding_window_aggregation",
  "suffix_array",
+ "union_find",
 ]
