@@ -184,6 +184,9 @@ impl Iterator for PathSegments<'_> {
     // (u, v, topdown, last)
     // index(u) < index(v)
     type Item = (usize, usize, bool, bool);
+
+    // TODO: allowed by default in >= 1.94
+    #[allow(clippy::collapsible_else_if)]
     fn next(&mut self) -> Option<Self::Item> {
         if self.exhausted {
             return None;
