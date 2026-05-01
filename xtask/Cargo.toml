@@ -1,0 +1,12 @@
+[package]
+name = "xtask"
+version = "0.1.0"
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+bundle = { path = "../crates/bundle" }
+clap = { version = "4.6.0", features = ["derive"] }

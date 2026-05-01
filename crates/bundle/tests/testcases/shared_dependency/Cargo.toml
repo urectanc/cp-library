@@ -1,0 +1,8 @@
+[workspace]
+members = ["child", "entry", "grandchild"]
+
+[workspace.dependencies]
+child = { path = "./child" }
+entry = { path = "./entry" }
+grandchild = { path = "./grandchild" }
+

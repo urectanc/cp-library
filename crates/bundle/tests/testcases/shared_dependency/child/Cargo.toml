@@ -1,0 +1,7 @@
+[package]
+name = "child"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+grandchild.workspace = true

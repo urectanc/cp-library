@@ -1,0 +1,6 @@
+[workspace]
+members = ["entry"]
+
+[workspace.dependencies]
+entry = { path = "./entry" }
+

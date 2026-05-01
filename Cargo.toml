@@ -1,6 +1,8 @@
 [workspace]
 members = [
+    "crates/bundle",
     "crates/urectanc/*",
+    "xtask",
 ]
 
 [workspace.package]
