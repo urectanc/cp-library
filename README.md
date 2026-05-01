@@ -2,6 +2,8 @@
 
 My competitive programming library
 
+- [Documentation](https://urectanc.github.io/cp-library/urectanc/)
+
 ## Usage
 
 Add this library to your project.
