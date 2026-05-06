@@ -33,6 +33,8 @@ pub fn strongly_connected_components(
                 if low[next] == !0 {
                     stack.push((next, 0, true));
                 } else {
+                    // TODO: allowed by default in >= 1.94
+                    #[allow(clippy::collapsible_else_if)]
                     if low[next] < low[*current] {
                         low[*current] = low[next];
                         *scc_root = false;
