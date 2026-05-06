@@ -21,6 +21,7 @@ pub use rerooting;
 pub use rolling_hash;
 pub use segment_tree;
 pub use sliding_window_aggregation;
+pub use strongly_connected_components;
 pub use suffix_array;
 pub use union_find;
 pub use wavelet_matrix;

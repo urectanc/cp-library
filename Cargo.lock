@@ -369,6 +369,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "strongly_connected_components"
+version = "0.1.0"
+dependencies = [
+ "compressed_sparse_row",
+]
+
+[[package]]
 name = "strsim"
 version = "0.11.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -465,6 +472,7 @@ dependencies = [
  "rolling_hash",
  "segment_tree",
  "sliding_window_aggregation",
+ "strongly_connected_components",
  "suffix_array",
  "union_find",
  "wavelet_matrix",
