@@ -13,6 +13,7 @@ repository = "https://github.com/urectanc/cp-library"
 rust-version = "1.89"
 
 [workspace.dependencies]
+aho_corasick = { path = "./crates/urectanc/aho_corasick" }
 algebra = { path = "./crates/urectanc/algebra" }
 binary_indexed_tree = { path = "./crates/urectanc/binary_indexed_tree" }
 cartesian_tree = { path = "./crates/urectanc/cartesian_tree" }
@@ -51,6 +52,7 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+aho_corasick.workspace = true
 algebra.workspace = true
 binary_indexed_tree.workspace = true
 cartesian_tree.workspace = true

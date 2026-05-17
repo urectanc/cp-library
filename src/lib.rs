@@ -1,3 +1,4 @@
+pub use aho_corasick;
 pub use algebra;
 pub use binary_indexed_tree;
 pub use cartesian_tree;
