@@ -23,6 +23,7 @@ disjoint_sparse_table = { path = "./crates/urectanc/disjoint_sparse_table" }
 fast_io = { path = "./crates/urectanc/fast_io" }
 heavy_light_decomposition = { path = "./crates/urectanc/heavy_light_decomposition" }
 interval_set = { path = "./crates/urectanc/interval_set" }
+io = { path = "./crates/urectanc/io" }
 lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 low_link = { path = "./crates/urectanc/low_link" }
 mo = { path = "./crates/urectanc/mo" }
@@ -62,6 +63,7 @@ disjoint_sparse_table.workspace = true
 fast_io.workspace = true
 heavy_light_decomposition.workspace = true
 interval_set.workspace = true
+io.workspace = true
 lazy_segment_tree.workspace = true
 low_link.workspace = true
 mo.workspace = true
