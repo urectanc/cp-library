@@ -26,6 +26,7 @@ interval_set = { path = "./crates/urectanc/interval_set" }
 io = { path = "./crates/urectanc/io" }
 lazy_segment_tree = { path = "./crates/urectanc/lazy_segment_tree" }
 low_link = { path = "./crates/urectanc/low_link" }
+manacher = { path = "./crates/urectanc/manacher" }
 mo = { path = "./crates/urectanc/mo" }
 modint = { path = "./crates/urectanc/modint" }
 montgomery = { path = "./crates/urectanc/montgomery" }
@@ -67,6 +68,7 @@ interval_set.workspace = true
 io.workspace = true
 lazy_segment_tree.workspace = true
 low_link.workspace = true
+manacher.workspace = true
 mo.workspace = true
 modint.workspace = true
 montgomery.workspace = true

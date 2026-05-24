@@ -11,6 +11,7 @@ pub use interval_set;
 pub use io;
 pub use lazy_segment_tree;
 pub use low_link;
+pub use manacher;
 pub use mo;
 pub use modint;
 pub use montgomery;

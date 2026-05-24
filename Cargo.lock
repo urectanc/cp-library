@@ -229,6 +229,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "manacher"
+version = "0.1.0"
+
+[[package]]
 name = "mo"
 version = "0.1.0"
 
@@ -470,6 +474,7 @@ dependencies = [
  "io",
  "lazy_segment_tree",
  "low_link",
+ "manacher",
  "mo",
  "modint",
  "montgomery",
