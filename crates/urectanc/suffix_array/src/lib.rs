@@ -3,8 +3,12 @@ pub struct SuffixArray<'a, T> {
     sa: Vec<usize>,
 }
 
-impl<'a> From<&'a str> for SuffixArray<'a, u8> {
-    fn from(value: &'a str) -> Self {
+impl<'a, S> From<&'a S> for SuffixArray<'a, u8>
+where
+    S: AsRef<str>,
+{
+    fn from(value: &'a S) -> Self {
+        let value = value.as_ref();
         let s = value.bytes().map(i32::from).collect::<Vec<_>>();
         let sa = suffix_array_i32(&s, 1 << 8);
         Self {
