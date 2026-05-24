@@ -19,5 +19,5 @@ pub fn manancher(s: &str) -> Vec<usize> {
             (l, r) = (i - p[i], i + p[i]);
         }
     }
-    p[2..n].into_iter().map(|&p| p - 1).collect()
+    p[2..n].iter().map(|&p| p - 1).collect()
 }
