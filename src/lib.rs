@@ -27,3 +27,4 @@ pub use strongly_connected_components;
 pub use suffix_array;
 pub use union_find;
 pub use wavelet_matrix;
+pub use z_algorithm;

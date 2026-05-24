@@ -42,6 +42,7 @@ strongly_connected_components = { path = "./crates/urectanc/strongly_connected_c
 suffix_array = { path = "./crates/urectanc/suffix_array" }
 union_find = { path = "./crates/urectanc/union_find" }
 wavelet_matrix = { path = "./crates/urectanc/wavelet_matrix" }
+z_algorithm = { path = "./crates/urectanc/z_algorithm" }
 
 [package]
 name = "urectanc"
@@ -82,3 +83,4 @@ strongly_connected_components.workspace = true
 suffix_array.workspace = true
 union_find.workspace = true
 wavelet_matrix.workspace = true
+z_algorithm.workspace = true

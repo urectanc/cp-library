@@ -486,6 +486,7 @@ dependencies = [
  "suffix_array",
  "union_find",
  "wavelet_matrix",
+ "z_algorithm",
 ]
 
 [[package]]
@@ -535,3 +536,7 @@ dependencies = [
  "bundle",
  "clap",
 ]
+
+[[package]]
+name = "z_algorithm"
+version = "0.1.0"
