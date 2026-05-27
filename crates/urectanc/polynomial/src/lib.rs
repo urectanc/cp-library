@@ -188,6 +188,37 @@ impl<M: NTTFriendly> Polynomial<M> {
             .collect()
     }
 
+    pub fn taylor_shift(mut self, shift: impl Into<StaticModInt<M>>) -> Self {
+        let n = self.deg();
+        let shift = shift.into();
+
+        let mut coeff = vec![StaticModInt::<M>::one(); n];
+        for i in 1..n {
+            coeff[i] = coeff[i - 1] * i;
+        }
+        self.coeff.hadamard(&coeff);
+        self.coeff.reverse();
+
+        coeff[n - 1] = coeff[n - 1].inv();
+        for i in (1..n).rev() {
+            coeff[i - 1] = coeff[i] * i;
+        }
+
+        let exp = coeff
+            .iter()
+            .scan(StaticModInt::one(), |c, &finv| {
+                let a = *c * finv;
+                *c *= &shift;
+                Some(a)
+            })
+            .collect();
+        self = (self * exp).prefix(n);
+        self.coeff.reverse();
+        self.coeff.hadamard(&coeff);
+
+        self
+    }
+
     /// # References
     ///
     /// - [線形漸化的数列のN項目の計算 #アルゴリズム - Qiita](https://qiita.com/ryuhe1/items/da5acbcce4ac1911f47a)
