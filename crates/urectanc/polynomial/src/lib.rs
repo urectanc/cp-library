@@ -380,7 +380,7 @@ impl<M: NTTFriendly> MulAssign for Polynomial<M> {
     }
 }
 
-impl<M: NTTFriendly> Shl<usize> for Polynomial<M> {
+impl<M: Modulus> Shl<usize> for Polynomial<M> {
     type Output = Self;
 
     #[allow(clippy::suspicious_arithmetic_impl)]
@@ -391,7 +391,7 @@ impl<M: NTTFriendly> Shl<usize> for Polynomial<M> {
     }
 }
 
-impl<M: NTTFriendly> Shr<usize> for Polynomial<M> {
+impl<M: Modulus> Shr<usize> for Polynomial<M> {
     type Output = Self;
 
     fn shr(mut self, rhs: usize) -> Self::Output {
