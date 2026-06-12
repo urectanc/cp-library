@@ -1,6 +1,9 @@
+use compressed_sparse_row::CSRArray;
+
 const PARENT_FLAG: usize = 1 << 30;
 
 pub struct HeavyLightDecomposition {
+    root: usize,
     head_or_parent: Vec<usize>,
     index: Vec<usize>,
     pre_order: Vec<usize>,
@@ -60,6 +63,7 @@ impl HeavyLightDecomposition {
         }
 
         Self {
+            root,
             head_or_parent,
             index,
             pre_order: order,
@@ -67,8 +71,37 @@ impl HeavyLightDecomposition {
         }
     }
 
+    pub fn root(&self) -> usize {
+        self.root
+    }
+
+    pub fn size(&self) -> usize {
+        self.pre_order.len()
+    }
+
+    pub fn graph(&self) -> CSRArray<usize> {
+        let edges: Vec<_> = self
+            .pre_order
+            .iter()
+            .skip(1)
+            .map(|&v| (self.parent(v).unwrap(), v))
+            .collect();
+        CSRArray::new(self.size(), edges)
+    }
+
+    pub fn subtree_size(&self, v: usize) -> usize {
+        self.subtree_size[v]
+    }
+
     pub fn pre_order(&self) -> &'_ [usize] {
         &self.pre_order
+    }
+
+    pub fn heavy_path(&self, v: usize) -> &'_ [usize] {
+        self.pre_order[self.index(v)..]
+            .chunk_by(|_, &u| self.head(u) == v)
+            .next()
+            .unwrap()
     }
 
     fn head(&self, v: usize) -> usize {

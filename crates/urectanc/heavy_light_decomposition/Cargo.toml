@@ -8,3 +8,4 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+compressed_sparse_row.workspace = true
