@@ -384,6 +384,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "static_top_tree"
+version = "0.1.0"
+dependencies = [
+ "algebra",
+ "heavy_light_decomposition",
+]
+
+[[package]]
 name = "strongly_connected_components"
 version = "0.1.0"
 dependencies = [
@@ -490,6 +498,7 @@ dependencies = [
  "rolling_hash",
  "segment_tree",
  "sliding_window_aggregation",
+ "static_top_tree",
  "strongly_connected_components",
  "suffix_array",
  "union_find",
