@@ -42,11 +42,23 @@ impl HeavyLightDecomposition {
         }
         order.push(root);
 
+        let mut count = vec![0; n + 1];
+        for &i in &subtree_size {
+            count[i] += 1;
+        }
+        for i in (0..n).rev() {
+            count[i] += count[i + 1];
+        }
+        for (v, &size) in subtree_size.iter().enumerate() {
+            count[size] -= 1;
+            order[count[size]] = v;
+        }
+
         let mut head_or_parent = adj;
         head_or_parent[root] = !0;
         let mut index = vec![0; n];
         let mut offset = vec![1; n];
-        for &v in order.iter().rev().skip(1) {
+        for &v in order.iter().skip(1) {
             let p = head_or_parent[v];
             if offset[p] == 1 {
                 let head = head_or_parent[p];
