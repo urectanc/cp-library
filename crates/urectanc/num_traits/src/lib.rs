@@ -1,9 +1,13 @@
-use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, Sub, SubAssign};
+use std::{
+    fmt::Debug,
+    ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Rem, RemAssign, Sub, SubAssign},
+};
 
 pub trait PrimitiveInteger:
     'static
     + Copy
     + Ord
+    + Debug
     + Add<Output = Self>
     + Sub<Output = Self>
     + Mul<Output = Self>
@@ -15,6 +19,7 @@ pub trait PrimitiveInteger:
     + DivAssign
     + RemAssign
 {
+    fn midpoint(self, rhs: Self) -> Self;
     fn rem_euclid(self, rhs: Self) -> Self;
     fn zero() -> Self;
     fn one() -> Self;
@@ -25,6 +30,9 @@ pub trait PrimitiveInteger:
 macro_rules! impl_primitive_integer {
     ($($ty:ty),*) => { $(
         impl PrimitiveInteger for $ty {
+            fn midpoint(self, rhs: Self) -> Self {
+                self.midpoint(rhs)
+            }
             fn rem_euclid(self, rhs: Self) -> Self {
                 self.rem_euclid(rhs)
             }
