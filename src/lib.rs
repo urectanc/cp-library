@@ -6,6 +6,7 @@ pub use clamp_range;
 pub use compressed_sparse_row;
 pub use disjoint_sparse_table;
 pub use fast_io;
+pub use gcd;
 pub use heavy_light_decomposition;
 pub use interval_set;
 pub use io;

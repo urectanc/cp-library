@@ -1,3 +1,5 @@
+use gcd::gcd;
+
 pub fn miller_rabin(n: u64) -> bool {
     const WITNESS_3: [u64; 3] = [2, 7, 61];
     const WITNESS_7: [u64; 7] = [2, 325, 9375, 28178, 450775, 9780504, 1795265022];
@@ -116,28 +118,6 @@ fn pollard_brent(n: u64) -> Option<u64> {
     }
 
     unreachable!()
-}
-
-fn gcd(mut a: u64, mut b: u64) -> u64 {
-    if a == 0 || b == 0 {
-        return a + b;
-    }
-
-    let shift = (a | b).trailing_zeros();
-    a >>= a.trailing_zeros();
-    b >>= b.trailing_zeros();
-
-    while a != b {
-        if a > b {
-            a -= b;
-            a >>= a.trailing_zeros();
-        } else {
-            b -= a;
-            b >>= b.trailing_zeros();
-        }
-    }
-
-    a << shift
 }
 
 struct Montgomery {
