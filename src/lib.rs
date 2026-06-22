@@ -21,6 +21,7 @@ pub use number_theoretic_transform;
 pub use polynomial;
 pub use potentialized_union_find;
 pub use prime;
+pub use rational;
 pub use rerooting;
 pub use rolling_hash;
 pub use segment_tree;

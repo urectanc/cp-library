@@ -323,6 +323,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "rational"
+version = "0.1.0"
+dependencies = [
+ "num_traits",
+]
+
+[[package]]
 name = "rerooting"
 version = "0.1.0"
 dependencies = [
@@ -502,6 +509,7 @@ dependencies = [
  "polynomial",
  "potentialized_union_find",
  "prime",
+ "rational",
  "rerooting",
  "rolling_hash",
  "segment_tree",
