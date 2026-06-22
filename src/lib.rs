@@ -27,6 +27,7 @@ pub use rolling_hash;
 pub use segment_tree;
 pub use sliding_window_aggregation;
 pub use static_top_tree;
+pub use stern_brocot_tree;
 pub use strongly_connected_components;
 pub use suffix_array;
 pub use union_find;

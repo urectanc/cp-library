@@ -42,6 +42,7 @@ rolling_hash = { path = "./crates/urectanc/rolling_hash" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 static_top_tree = { path = "./crates/urectanc/static_top_tree" }
+stern_brocot_tree = { path = "./crates/urectanc/stern_brocot_tree" }
 strongly_connected_components = { path = "./crates/urectanc/strongly_connected_components" }
 suffix_array = { path = "./crates/urectanc/suffix_array" }
 union_find = { path = "./crates/urectanc/union_find" }
@@ -87,6 +88,7 @@ rolling_hash.workspace = true
 segment_tree.workspace = true
 sliding_window_aggregation.workspace = true
 static_top_tree.workspace = true
+stern_brocot_tree.workspace = true
 strongly_connected_components.workspace = true
 suffix_array.workspace = true
 union_find.workspace = true

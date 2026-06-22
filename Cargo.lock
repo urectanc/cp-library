@@ -406,6 +406,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "stern_brocot_tree"
+version = "0.1.0"
+dependencies = [
+ "num_traits",
+ "rational",
+]
+
+[[package]]
 name = "strongly_connected_components"
 version = "0.1.0"
 dependencies = [
@@ -515,6 +523,7 @@ dependencies = [
  "segment_tree",
  "sliding_window_aggregation",
  "static_top_tree",
+ "stern_brocot_tree",
  "strongly_connected_components",
  "suffix_array",
  "union_find",
