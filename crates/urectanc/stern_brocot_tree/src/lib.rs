@@ -64,48 +64,36 @@ impl<I: PrimitiveInteger> SternBrocotTree<I> {
         }
     }
 
-    pub fn binary_search(f: impl Fn(Rational<I>) -> bool, n: I) -> Self {
-        assert!(n > I::zero());
+    /// # Reference
+    /// - [[Library Checker] Rational Approximation | maspyのHP](https://maspypy.com/library-checker-rational-approximation)
+    pub fn binary_search(f: impl Fn(Rational<I>) -> bool, lim: I) -> Self {
+        assert!(lim > I::zero());
 
-        let go = |node: &Self, d: I, to_left: bool| {
-            if to_left {
-                node.nth_left(d)
-            } else {
-                node.nth_right(d)
+        let check = |x: Rational<I>, ok: bool| x.num() <= lim && x.denom() <= lim && f(x) == ok;
+        let step = |a: Rational<I>, b: Rational<I>, ok: bool| {
+            if a.num() > lim || a.denom() > lim {
+                return a;
             }
-        };
-
-        let over = |node: &Self, to_left: bool| {
-            let v = node.val();
-            v.num() > n || v.denom() > n || f(v) == to_left
+            let go = |n: I| Rational::new(a.num() + n * b.num(), a.denom() + n * b.denom());
+            let (mut l, mut w) = (I::zero(), I::one());
+            while check(go(l + w), ok) {
+                (l, w) = (l + w, w + w);
+            }
+            while w > I::one() {
+                w = w.midpoint(I::zero());
+                if check(go(l + w), ok) {
+                    l += w;
+                }
+            }
+            go(l)
         };
 
         let mut node = Self::root();
-        let mut to_left = over(&node, false);
-        loop {
-            let (mut ok, mut ng) = (I::zero(), I::one());
-
-            while !over(&go(&node, ng, to_left), to_left) {
-                (ok, ng) = (ng, ng + ng);
-            }
-
-            while ng - ok > I::one() {
-                let mid = ok.midpoint(ng);
-                if over(&go(&node, mid, to_left), to_left) {
-                    ng = mid;
-                } else {
-                    ok = mid;
-                }
-            }
-
-            node = go(&node, ng, to_left);
-            let v = node.val();
-            if v.num() > n || v.denom() > n {
-                return node;
-            }
-
-            to_left ^= true;
+        while node.val().num() <= lim && node.val().denom() <= lim {
+            node.left = step(node.left, node.right, true);
+            node.right = step(node.right, node.left, false);
         }
+        node
     }
 }
 
