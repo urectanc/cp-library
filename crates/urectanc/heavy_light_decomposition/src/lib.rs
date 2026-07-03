@@ -150,6 +150,22 @@ impl HeavyLightDecomposition {
         (l..r).contains(&self.index(descendant))
     }
 
+    pub fn jump(&self, s: usize, t: usize, d: usize) -> Option<usize> {
+        let (ds, dt) = self.path_edges(s, t).fold((0, 0), |acc, (l, r, topdown)| {
+            if topdown {
+                (acc.0, acc.1 + r - l)
+            } else {
+                (acc.0 + r - l, acc.1)
+            }
+        });
+
+        match d {
+            d if (0..ds).contains(&d) => self.la(s, d),
+            d if (ds..=ds + dt).contains(&d) => self.la(t, ds + dt - d),
+            _ => None,
+        }
+    }
+
     pub fn la(&self, v: usize, mut d: usize) -> Option<usize> {
         let mut la = Some(v);
 
