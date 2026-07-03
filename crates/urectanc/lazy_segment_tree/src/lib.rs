@@ -44,35 +44,37 @@ impl<M: MapMonoid> LazySegmentTree<M> {
 
     pub fn prod(&mut self, range: impl RangeBounds<usize>) -> M::Elem {
         let (mut l, mut r) = range.clamp(0, self.len);
-        if (l, r) == (0, self.len) {
-            return self.tree[1].clone();
+        if l == r {
+            return M::identity();
         }
 
-        (l, r) = (l + self.offset, r + self.offset);
-        for k in (1..=self.height).rev() {
-            if ((l >> k) << k) != l {
-                self.push(l >> k);
-            }
-            if ((r >> k) << k) != r {
-                self.push(r >> k);
-            }
-        }
+        l += self.offset - 1;
+        r += self.offset;
 
         let mut acc_l = M::identity();
         let mut acc_r = M::identity();
-        while l < r {
-            if l & 1 == 1 {
-                acc_l = M::op(&acc_l, &self.tree[l]);
-                l += 1;
+        for _ in 0..(l ^ r).ilog2() {
+            if l & 1 == 0 {
+                acc_l = M::op(&acc_l, &self.tree[l ^ 1]);
             }
             if r & 1 == 1 {
-                r -= 1;
-                acc_r = M::op(&self.tree[r], &acc_r);
+                acc_r = M::op(&self.tree[r ^ 1], &acc_r);
             }
-            (l, r) = (l >> 1, r >> 1);
+            l >>= 1;
+            r >>= 1;
+            acc_l = M::apply(&acc_l, &self.lazy[l]);
+            if r < self.offset {
+                acc_r = M::apply(&acc_r, &self.lazy[r]);
+            }
         }
 
-        M::op(&acc_l, &acc_r)
+        let mut res = M::op(&acc_l, &acc_r);
+        while l > 1 {
+            l >>= 1;
+            res = M::apply(&res, &self.lazy[l]);
+        }
+
+        res
     }
 
     pub fn apply(&mut self, mut i: usize, f: M::Map) {
