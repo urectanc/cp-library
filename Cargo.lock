@@ -153,6 +153,10 @@ name = "compressed_sparse_row"
 version = "0.1.0"
 
 [[package]]
+name = "convex_hull_trick"
+version = "0.1.0"
+
+[[package]]
 name = "coordinate_compression"
 version = "0.1.0"
 
@@ -504,6 +508,7 @@ dependencies = [
  "cartesian_tree",
  "clamp_range",
  "compressed_sparse_row",
+ "convex_hull_trick",
  "coordinate_compression",
  "disjoint_sparse_table",
  "fast_io",

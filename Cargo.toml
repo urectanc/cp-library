@@ -19,6 +19,7 @@ binary_indexed_tree = { path = "./crates/urectanc/binary_indexed_tree" }
 cartesian_tree = { path = "./crates/urectanc/cartesian_tree" }
 clamp_range = { path = "./crates/urectanc/clamp_range" }
 compressed_sparse_row = { path = "./crates/urectanc/compressed_sparse_row" }
+convex_hull_trick = { path = "./crates/urectanc/convex_hull_trick" }
 coordinate_compression = { path = "./crates/urectanc/coordinate_compression" }
 disjoint_sparse_table = { path = "./crates/urectanc/disjoint_sparse_table" }
 fast_io = { path = "./crates/urectanc/fast_io" }
@@ -66,6 +67,7 @@ binary_indexed_tree.workspace = true
 cartesian_tree.workspace = true
 clamp_range.workspace = true
 compressed_sparse_row.workspace = true
+convex_hull_trick.workspace = true
 coordinate_compression.workspace = true
 disjoint_sparse_table.workspace = true
 fast_io.workspace = true
