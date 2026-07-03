@@ -13,6 +13,7 @@ pub use heavy_light_decomposition;
 pub use interval_set;
 pub use io;
 pub use lazy_segment_tree;
+pub use li_chao_tree;
 pub use low_link;
 pub use manacher;
 pub use mo;

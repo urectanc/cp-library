@@ -237,6 +237,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "li_chao_tree"
+version = "0.1.0"
+
+[[package]]
 name = "low_link"
 version = "0.1.0"
 dependencies = [
@@ -517,6 +521,7 @@ dependencies = [
  "interval_set",
  "io",
  "lazy_segment_tree",
+ "li_chao_tree",
  "low_link",
  "manacher",
  "mo",
