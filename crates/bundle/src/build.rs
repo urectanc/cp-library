@@ -92,7 +92,16 @@ impl<'a> AstBuilder<'a> {
         mut ast: Vec<syn::Item>,
         module_path: &[String],
     ) -> Result<Vec<syn::Item>> {
-        let module_dependencies = self.module_dependencies(&ast);
+        let module_dependencies = self.module_dependencies(&ast).map_err(|error| {
+            let source_path = self.loader.find(module_path).ok();
+            let source = source_path
+                .as_ref()
+                .map(|path| format!("crate source `{}`", path.display()))
+                .unwrap_or_else(|| format!("module `{}`", module_path.join("::")));
+            error.context(format!(
+                "{source} contains unsupported `crate::` path; fix the library"
+            ))
+        })?;
 
         for item in &mut ast {
             let syn::Item::Mod(item_mod) = item else {
@@ -129,7 +138,7 @@ impl<'a> AstBuilder<'a> {
         Ok(ast)
     }
 
-    fn module_dependencies(&self, ast: &[syn::Item]) -> BTreeSet<String> {
+    fn module_dependencies(&self, ast: &[syn::Item]) -> Result<BTreeSet<String>> {
         let mut scanner = DependencyScanner::new(self.dependencies);
         for item in ast {
             scanner.visit_item(item);
@@ -151,13 +160,16 @@ impl<'a> DependencyScanner<'a> {
         }
     }
 
-    fn finish(self) -> BTreeSet<String> {
-        self.dependencies
+    fn finish(self) -> Result<BTreeSet<String>> {
+        if self.dependencies.contains("crate") {
+            bail!("unsupported `crate::` path");
+        }
+        Ok(self.dependencies)
     }
 
     fn record(&mut self, crate_name: &syn::Ident) {
         let crate_name = crate_name.to_string();
-        if self.crate_dependencies.contains(&crate_name) {
+        if crate_name == "crate" || self.crate_dependencies.contains(&crate_name) {
             self.dependencies.insert(crate_name);
         }
     }
@@ -201,6 +213,8 @@ fn public_module(name: &str, content: Vec<syn::Item>) -> Result<syn::ItemMod> {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeSet;
+
     use syn::visit::Visit;
 
     use super::DependencyScanner;
@@ -213,9 +227,17 @@ mod tests {
             .collect();
         let mut scanner = DependencyScanner::new(&crate_dependencies);
         items.iter().for_each(|item| scanner.visit_item(item));
-        let dependencies = scanner.finish();
+        let dependencies = scanner.finish().expect("scan should succeed");
         let expected = expected.iter().map(|dep| dep.to_string()).collect();
         assert_eq!(dependencies, expected);
+    }
+
+    fn test_reject(content: &str) {
+        let items = syn::parse_file(content).expect("invalid testcase").items;
+        let crate_dependencies = BTreeSet::new();
+        let mut scanner = DependencyScanner::new(&crate_dependencies);
+        items.iter().for_each(|item| scanner.visit_item(item));
+        scanner.finish().expect_err("scan should fail");
     }
 
     #[test]
@@ -236,6 +258,16 @@ mod tests {
     #[test]
     fn collect_nested_path() {
         test_scan("type T = Vec<dep::Struct>;", &["dep"], &["dep"]);
+    }
+
+    #[test]
+    fn reject_crate_absolute_use() {
+        test_reject("use crate::inner::Item;");
+    }
+
+    #[test]
+    fn reject_crate_absolute_path() {
+        test_reject("fn f() { crate::inner::VALUE }");
     }
 
     #[test]

@@ -56,3 +56,27 @@ fn reject_unknown_crate() {
         .expect_err("invalid testcase");
     assert_eq!(error.to_string(), "unknown crate `unknown`");
 }
+
+#[test]
+fn reject_crate_absolute_path() {
+    let workspace = load_testcase("crate_absolute_path");
+    let error = workspace
+        .expand(&["entry"], "namespace")
+        .expect_err("crate absolute path should be rejected");
+    let source_path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("tests")
+        .join("testcases")
+        .join("crate_absolute_path")
+        .join("entry")
+        .join("src")
+        .join("lib.rs")
+        .canonicalize()
+        .expect("invalid testcase");
+    assert_eq!(
+        error.to_string(),
+        format!(
+            "crate source `{}` contains unsupported `crate::` path; fix the library",
+            source_path.display()
+        )
+    );
+}
