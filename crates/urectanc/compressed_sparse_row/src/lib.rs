@@ -9,7 +9,7 @@ pub struct CSRArray<T> {
 impl<T> CSRArray<T> {
     pub fn new(n: usize, items: impl AsRef<[(usize, T)]>) -> Self
     where
-        T: Copy + Default,
+        T: Copy,
     {
         let items = items.as_ref();
         let mut index = vec![0; n + 1];
@@ -21,10 +21,16 @@ impl<T> CSRArray<T> {
         }
 
         let m = items.len();
-        let mut csr = vec![T::default(); m];
-        for &(k, v) in items.iter().rev() {
-            index[k] -= 1;
-            csr[index[k]] = v;
+        let mut csr: Vec<T> = Vec::with_capacity(m);
+        {
+            let csr = csr.spare_capacity_mut();
+            for &(k, v) in items.iter().rev() {
+                index[k] -= 1;
+                csr[index[k]].write(v);
+            }
+        }
+        unsafe {
+            csr.set_len(m);
         }
 
         Self { n, index, csr }
