@@ -4,6 +4,7 @@ pub use binary_indexed_tree;
 pub use cartesian_tree;
 pub use clamp_range;
 pub use compressed_sparse_row;
+pub use coordinate_compression;
 pub use disjoint_sparse_table;
 pub use fast_io;
 pub use gcd;

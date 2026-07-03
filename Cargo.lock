@@ -153,6 +153,10 @@ name = "compressed_sparse_row"
 version = "0.1.0"
 
 [[package]]
+name = "coordinate_compression"
+version = "0.1.0"
+
+[[package]]
 name = "disjoint_sparse_table"
 version = "0.1.0"
 dependencies = [
@@ -500,6 +504,7 @@ dependencies = [
  "cartesian_tree",
  "clamp_range",
  "compressed_sparse_row",
+ "coordinate_compression",
  "disjoint_sparse_table",
  "fast_io",
  "gcd",
