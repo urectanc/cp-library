@@ -58,7 +58,7 @@ fn reject_unknown_crate() {
 }
 
 #[test]
-fn reject_crate_absolute_path() {
+fn reject_crate_reference_path() {
     let workspace = load_testcase("crate_absolute_path");
     let error = workspace
         .expand(&["entry"], "namespace")
@@ -75,7 +75,7 @@ fn reject_crate_absolute_path() {
     assert_eq!(
         error.to_string(),
         format!(
-            "crate source `{}` contains unsupported `crate::` path; fix the library",
+            "crate source `{}` contains unsupported `crate` reference; fix the library",
             source_path.display()
         )
     );

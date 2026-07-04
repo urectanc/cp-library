@@ -99,7 +99,7 @@ impl<'a> AstBuilder<'a> {
                 .map(|path| format!("crate source `{}`", path.display()))
                 .unwrap_or_else(|| format!("module `{}`", module_path.join("::")));
             error.context(format!(
-                "{source} contains unsupported `crate::` path; fix the library"
+                "{source} contains unsupported `crate` reference; fix the library"
             ))
         })?;
 
@@ -162,7 +162,7 @@ impl<'a> DependencyScanner<'a> {
 
     fn finish(self) -> Result<BTreeSet<String>> {
         if self.dependencies.contains("crate") {
-            bail!("unsupported `crate::` path");
+            bail!("unsupported `crate` reference");
         }
         Ok(self.dependencies)
     }
@@ -261,13 +261,18 @@ mod tests {
     }
 
     #[test]
-    fn reject_crate_absolute_use() {
+    fn reject_crate_reference_use() {
         test_reject("use crate::inner::Item;");
     }
 
     #[test]
-    fn reject_crate_absolute_path() {
+    fn reject_crate_reference_path() {
         test_reject("fn f() { crate::inner::VALUE }");
+    }
+
+    #[test]
+    fn reject_crate_visibility() {
+        test_reject("pub(crate) fn f() {}");
     }
 
     #[test]

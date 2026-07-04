@@ -40,6 +40,8 @@ crate 間の依存関係は、各 crate の `Cargo.toml` に [workspace dependen
 bundle に渡す source では、 bundle 対象 crate を `<namespace>::<crate>` の形で参照する。
 `use <namespace>::*` のような glob import は、出力が巨大になりすぎるため非対応としている。
 
+crate を module として展開するため、 [`crate::` で始まるpath](https://doc.rust-lang.org/reference/paths.html#r-paths.qualifiers.crate) や [`pub(crate)`](https://doc.rust-lang.org/reference/visibility-and-privacy.html) には対応していない。ライブラリにこれらのコードが含まれる場合、 bundle 時にエラーとなる。
+
 出力からは通常コメントと doc comment 、および`#[test]` または `#[cfg(test)]` が付いた item が除去される。
 
 ### 例
