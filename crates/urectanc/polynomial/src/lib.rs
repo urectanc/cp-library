@@ -456,7 +456,7 @@ pub fn berlekamp_massey<M: Modulus>(a: &[StaticModInt<M>]) -> Polynomial<M> {
     c.into_iter().skip(1).collect()
 }
 
-pub(crate) fn modinv_table<M: Modulus>(n: usize) -> Vec<StaticModInt<M>> {
+fn modinv_table<M: Modulus>(n: usize) -> Vec<StaticModInt<M>> {
     let mut inv = vec![StaticModInt::raw(0); n + 1];
     if n > 0 {
         inv[1] = 1.into();
