@@ -33,6 +33,7 @@ low_link = { path = "./crates/urectanc/low_link" }
 manacher = { path = "./crates/urectanc/manacher" }
 mo = { path = "./crates/urectanc/mo" }
 modint = { path = "./crates/urectanc/modint" }
+modint_precalc = { path = "./crates/urectanc/modint_precalc" }
 montgomery = { path = "./crates/urectanc/montgomery" }
 num_traits = { path = "./crates/urectanc/num_traits" }
 number_theoretic_transform = { path = "./crates/urectanc/number_theoretic_transform" }
@@ -82,6 +83,7 @@ low_link.workspace = true
 manacher.workspace = true
 mo.workspace = true
 modint.workspace = true
+modint_precalc.workspace = true
 montgomery.workspace = true
 num_traits.workspace = true
 number_theoretic_transform.workspace = true

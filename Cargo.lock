@@ -260,6 +260,13 @@ name = "modint"
 version = "0.1.0"
 
 [[package]]
+name = "modint_precalc"
+version = "0.1.0"
+dependencies = [
+ "modint",
+]
+
+[[package]]
 name = "montgomery"
 version = "0.1.0"
 dependencies = [
@@ -526,6 +533,7 @@ dependencies = [
  "manacher",
  "mo",
  "modint",
+ "modint_precalc",
  "montgomery",
  "num_traits",
  "number_theoretic_transform",

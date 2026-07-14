@@ -18,6 +18,7 @@ pub use low_link;
 pub use manacher;
 pub use mo;
 pub use modint;
+pub use modint_precalc;
 pub use montgomery;
 pub use num_traits;
 pub use number_theoretic_transform;
