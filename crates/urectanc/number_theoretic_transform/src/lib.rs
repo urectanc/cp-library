@@ -4,7 +4,7 @@
 //! - [tayu-procon/number-theoretic-transform](https://github.com/tayu0110/tayu-procon/tree/master/number-theoretic-transform)
 //! - [競プロ 数論変換 除数 一覧 ( FFT NTT MOD 一覧 )  |  Mathenachia](https://www.mathenachia.blog/ntt-mod-list-01/)
 
-use modint::{Mod998244353, Modulus, StaticModInt};
+use modint::{Mod998244353, ModInt, Modulus};
 use montgomery::{Montgomery, MontgomeryModInt};
 
 #[cfg(target_arch = "x86_64")]
@@ -57,17 +57,17 @@ pub trait NumberTheoreticTransform<M, T: ?Sized> {
 
 impl<M, T: ?Sized> NumberTheoreticTransform<M, T> for T
 where
-    T: AsRef<[StaticModInt<M>]> + AsMut<[StaticModInt<M>]>,
+    T: AsRef<[ModInt<M>]> + AsMut<[ModInt<M>]>,
     M: NTTFriendly,
 {
     fn ntt(&mut self) {
-        let f = unsafe { transmute::<&mut [StaticModInt<M>], &mut [ModInt<M>]>(self.as_mut()) };
+        let f = unsafe { transmute::<&mut [ModInt<M>], &mut [MontgomeryModInt<M>]>(self.as_mut()) };
         assert!(f.len() <= (1 << (M::MOD - 1).trailing_zeros()));
         transform::<M>(f);
     }
 
     fn intt(&mut self) {
-        let f = unsafe { transmute::<&mut [StaticModInt<M>], &mut [ModInt<M>]>(self.as_mut()) };
+        let f = unsafe { transmute::<&mut [ModInt<M>], &mut [MontgomeryModInt<M>]>(self.as_mut()) };
         assert!(f.len() <= (1 << (M::MOD - 1).trailing_zeros()));
         inverse_transform::<M>(f);
     }
@@ -78,9 +78,9 @@ where
 }
 
 pub fn convolve<M: NTTFriendly>(
-    lhs: impl AsRef<[StaticModInt<M>]>,
-    rhs: impl AsRef<[StaticModInt<M>]>,
-) -> Vec<StaticModInt<M>> {
+    lhs: impl AsRef<[ModInt<M>]>,
+    rhs: impl AsRef<[ModInt<M>]>,
+) -> Vec<ModInt<M>> {
     let mut lhs = lhs.as_ref().to_owned();
     let mut rhs = rhs.as_ref().to_owned();
     let new_len = lhs.len() + rhs.len() - 1;
@@ -110,8 +110,8 @@ pub fn convolve_mod_arbitrary(
 
     let m = modulus as u64;
     let m1m2 = (M1 * M2) % m;
-    let inv_m1 = StaticModInt::<Mod469762049>::from(M1).inv();
-    let inv_m1m2 = StaticModInt::<Mod754974721>::from(M1 * M2).inv();
+    let inv_m1 = ModInt::<Mod469762049>::from(M1).inv();
+    let inv_m1m2 = ModInt::<Mod754974721>::from(M1 * M2).inv();
 
     let (lhs, rhs) = (lhs.as_ref(), rhs.as_ref());
     let r1 = convolve::<Mod167772161>(
@@ -139,15 +139,13 @@ pub fn convolve_mod_arbitrary(
         .collect()
 }
 
-type ModInt<M> = MontgomeryModInt<M>;
-
 pub struct ButterflyCache<M: NTTFriendly> {
-    imag: ModInt<M>,
-    iimag: ModInt<M>,
-    rate1: [ModInt<M>; 30],
-    irate1: [ModInt<M>; 30],
-    rate2: [ModInt<M>; 30],
-    irate2: [ModInt<M>; 30],
+    imag: MontgomeryModInt<M>,
+    iimag: MontgomeryModInt<M>,
+    rate1: [MontgomeryModInt<M>; 30],
+    irate1: [MontgomeryModInt<M>; 30],
+    rate2: [MontgomeryModInt<M>; 30],
+    irate2: [MontgomeryModInt<M>; 30],
     #[cfg(target_arch = "x86_64")]
     w1230: __m256i,
     #[cfg(target_arch = "x86_64")]
@@ -164,18 +162,18 @@ impl<M: NTTFriendly> ButterflyCache<M> {
         let lg = (M::MOD - 1).trailing_zeros() as usize;
 
         // (2^lg)-th root of M
-        let mut r = ModInt::<M>::new(M::PRIMITIVE_ROOT).pow((M::MOD - 1) >> lg);
+        let mut r = MontgomeryModInt::<M>::new(M::PRIMITIVE_ROOT).pow((M::MOD - 1) >> lg);
         let mut ir = r.inv();
 
         // root[i] = r^(bitrev(2^i))
-        let mut root = [ModInt::<M>::zero(); 30];
-        let mut iroot = [ModInt::<M>::zero(); 30];
+        let mut root = [MontgomeryModInt::<M>::zero(); 30];
+        let mut iroot = [MontgomeryModInt::<M>::zero(); 30];
         // rate1[i] = r^(bitrev(k+1)) / r^(bitrev(k)) where k.trailing_ones() == i
-        let mut rate1 = [ModInt::<M>::zero(); 30];
-        let mut irate1 = [ModInt::<M>::zero(); 30];
+        let mut rate1 = [MontgomeryModInt::<M>::zero(); 30];
+        let mut irate1 = [MontgomeryModInt::<M>::zero(); 30];
         // rate2[i] = r^(bitrev(k+2)) / r^(bitrev(k)) where k.trailing_ones() == i
-        let mut rate2 = [ModInt::<M>::zero(); 30];
-        let mut irate2 = [ModInt::<M>::zero(); 30];
+        let mut rate2 = [MontgomeryModInt::<M>::zero(); 30];
+        let mut irate2 = [MontgomeryModInt::<M>::zero(); 30];
 
         let mut i = lg;
         while i > 0 {
@@ -186,11 +184,11 @@ impl<M: NTTFriendly> ButterflyCache<M> {
             ir = ir.mul2(ir);
         }
 
-        let one = ModInt::<M>::one();
-        let mut rate1230 = [[ModInt::<M>::zero(); 8]; 30];
-        let mut irate1230 = [[ModInt::<M>::zero(); 8]; 30];
-        let mut acc = ModInt::<M>::one();
-        let mut iacc = ModInt::<M>::one();
+        let one = MontgomeryModInt::<M>::one();
+        let mut rate1230 = [[MontgomeryModInt::<M>::zero(); 8]; 30];
+        let mut irate1230 = [[MontgomeryModInt::<M>::zero(); 8]; 30];
+        let mut acc = MontgomeryModInt::<M>::one();
+        let mut iacc = MontgomeryModInt::<M>::one();
         let mut i = 0;
         while i < lg - 1 {
             let r3 = root[i + 3].mul2(iacc).normalize();
@@ -223,18 +221,22 @@ impl<M: NTTFriendly> ButterflyCache<M> {
             rate2,
             irate2,
             #[cfg(target_arch = "x86_64")]
-            w1230: unsafe { transmute::<[ModInt<M>; 8], __m256i>(w1230) },
+            w1230: unsafe { transmute::<[MontgomeryModInt<M>; 8], __m256i>(w1230) },
             #[cfg(target_arch = "x86_64")]
-            iw1230: unsafe { transmute::<[ModInt<M>; 8], __m256i>(iw1230) },
+            iw1230: unsafe { transmute::<[MontgomeryModInt<M>; 8], __m256i>(iw1230) },
             #[cfg(target_arch = "x86_64")]
-            rate1230: unsafe { transmute::<[[ModInt<M>; 8]; 30], [__m256i; 30]>(rate1230) },
+            rate1230: unsafe {
+                transmute::<[[MontgomeryModInt<M>; 8]; 30], [__m256i; 30]>(rate1230)
+            },
             #[cfg(target_arch = "x86_64")]
-            irate1230: unsafe { transmute::<[[ModInt<M>; 8]; 30], [__m256i; 30]>(irate1230) },
+            irate1230: unsafe {
+                transmute::<[[MontgomeryModInt<M>; 8]; 30], [__m256i; 30]>(irate1230)
+            },
         }
     }
 }
 
-fn transform<M: NTTFriendly>(f: &mut [ModInt<M>]) {
+fn transform<M: NTTFriendly>(f: &mut [MontgomeryModInt<M>]) {
     if f.len() >= 8 && is_x86_feature_detected!("avx") {
         unsafe { simd::transform_avx2(f) };
         return;
@@ -257,7 +259,7 @@ fn transform<M: NTTFriendly>(f: &mut [ModInt<M>]) {
 
     for k in (0..log).step_by(2).rev() {
         let block_size = 1 << k;
-        let mut w = ModInt::<M>::one();
+        let mut w = MontgomeryModInt::<M>::one();
         for (i, chunk) in f.chunks_exact_mut(4 * block_size).enumerate() {
             let w2 = w * w;
             let w3 = w2 * w;
@@ -274,7 +276,7 @@ fn transform<M: NTTFriendly>(f: &mut [ModInt<M>]) {
     }
 }
 
-fn inverse_transform<M: NTTFriendly>(f: &mut [ModInt<M>]) {
+fn inverse_transform<M: NTTFriendly>(f: &mut [MontgomeryModInt<M>]) {
     if f.len() >= 8 && is_x86_feature_detected!("avx") {
         unsafe { simd::inverse_transform_avx2(f) };
         return;
@@ -290,7 +292,7 @@ fn inverse_transform<M: NTTFriendly>(f: &mut [ModInt<M>]) {
     let log = n.trailing_zeros();
     for k in (0..log).step_by(2) {
         let block_size = 1 << k;
-        let mut w = ModInt::<M>::one();
+        let mut w = MontgomeryModInt::<M>::one();
         for (i, chunk) in f.chunks_exact_mut(4 * block_size).enumerate() {
             let (b01, b23) = chunk.split_at_mut(2 * block_size);
             let (b0, b1) = b01.split_at_mut(block_size);
@@ -314,6 +316,6 @@ fn inverse_transform<M: NTTFriendly>(f: &mut [ModInt<M>]) {
         }
     }
 
-    let inv_n = ModInt::<M>::new(n as u32).inv();
+    let inv_n = MontgomeryModInt::<M>::new(n as u32).inv();
     f.iter_mut().for_each(|x| *x = (*x * inv_n).normalize());
 }

@@ -4,13 +4,13 @@ use std::{
     ops::{Add, AddAssign, Index, IndexMut, Mul, MulAssign, Shl, Shr, Sub, SubAssign},
 };
 
-use modint::{Modulus, StaticModInt};
+use modint::{ModInt, Modulus};
 use number_theoretic_transform::{NTTFriendly, convolve};
 
 use super::Polynomial;
 
 impl<M> Index<usize> for Polynomial<M> {
-    type Output = StaticModInt<M>;
+    type Output = ModInt<M>;
 
     fn index(&self, index: usize) -> &Self::Output {
         &self.coeff[index]

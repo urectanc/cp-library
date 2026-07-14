@@ -1,9 +1,9 @@
-use modint::{Modulus, StaticModInt};
+use modint::{ModInt, Modulus};
 
 use super::{Polynomial, modinv_table};
 
 pub struct SparsePolynomial<M> {
-    coeff: Vec<(usize, StaticModInt<M>)>,
+    coeff: Vec<(usize, ModInt<M>)>,
 }
 
 impl<M: Modulus> SparsePolynomial<M> {
@@ -21,7 +21,7 @@ impl<M: Modulus> SparsePolynomial<M> {
         let mut g = vec![Default::default(); precision];
         g[0] = scale;
         for i in 1..precision {
-            let mut gi = StaticModInt::<M>::zero();
+            let mut gi = ModInt::<M>::zero();
             for &(j, fj) in self.coeff.iter().take_while(|&&(j, _)| j <= i) {
                 gi -= fj * g[i - j];
             }
@@ -66,9 +66,9 @@ impl<M: Modulus> SparsePolynomial<M> {
 
         let inv = modinv_table::<M>(precision);
         let mut g = vec![Default::default(); precision];
-        g[0] = StaticModInt::<M>::one();
+        g[0] = ModInt::<M>::one();
         for i in 1..precision {
-            let mut ci = StaticModInt::<M>::zero();
+            let mut ci = ModInt::<M>::zero();
             for &(j, fj) in self.coeff.iter().take_while(|&&(j, _)| j <= i) {
                 ci += fj * g[i - j] * j;
             }
@@ -98,16 +98,16 @@ impl<M: Modulus> SparsePolynomial<M> {
         let mut g = vec![Default::default(); precision];
         g[0] = f0.pow(exp as _);
         let scale = f0.inv();
-        let e1 = StaticModInt::<M>::one() + exp;
+        let e1 = ModInt::<M>::one() + exp;
         for i in 1..precision {
-            let mut gi = StaticModInt::<M>::zero();
+            let mut gi = ModInt::<M>::zero();
             for &(j, fj) in self.coeff[1..].iter().take_while(|&&(j, _)| j <= i) {
                 gi += fj * g[i - j] * (e1 * j - i);
             }
             g[i] = gi * inv[i] * scale;
         }
 
-        std::iter::repeat_n(StaticModInt::<M>::zero(), offset)
+        std::iter::repeat_n(ModInt::<M>::zero(), offset)
             .chain(g)
             .collect()
     }
@@ -119,11 +119,11 @@ impl<M: Modulus> From<Polynomial<M>> for SparsePolynomial<M> {
     }
 }
 
-impl<M: Modulus> FromIterator<(usize, StaticModInt<M>)> for SparsePolynomial<M> {
-    fn from_iter<T: IntoIterator<Item = (usize, StaticModInt<M>)>>(iter: T) -> Self {
+impl<M: Modulus> FromIterator<(usize, ModInt<M>)> for SparsePolynomial<M> {
+    fn from_iter<T: IntoIterator<Item = (usize, ModInt<M>)>>(iter: T) -> Self {
         let mut coeff: Vec<_> = iter
             .into_iter()
-            .filter(|&(_, c)| c != StaticModInt::<M>::zero())
+            .filter(|&(_, c)| c != ModInt::<M>::zero())
             .collect();
         coeff.sort_unstable_by_key(|&(i, _)| i);
         Self { coeff }
@@ -135,7 +135,7 @@ impl<M: Modulus> From<SparsePolynomial<M>> for Polynomial<M> {
         let Some(deg) = f.coeff.iter().map(|&(i, _)| i).max() else {
             return Polynomial::zero();
         };
-        let mut coeff = vec![StaticModInt::<M>::zero(); deg + 1];
+        let mut coeff = vec![ModInt::<M>::zero(); deg + 1];
         for &(i, c) in &f.coeff {
             coeff[i] = c;
         }

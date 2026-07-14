@@ -4,7 +4,7 @@
 //! - [[多項式・形式的べき級数] 高速に計算できるものたち | maspyのHP](https://maspypy.com/%e5%a4%9a%e9%a0%85%e5%bc%8f%e3%83%bb%e5%bd%a2%e5%bc%8f%e7%9a%84%e3%81%b9%e3%81%8d%e7%b4%9a%e6%95%b0-%e9%ab%98%e9%80%9f%e3%81%ab%e8%a8%88%e7%ae%97%e3%81%a7%e3%81%8d%e3%82%8b%e3%82%82%e3%81%ae#toc7)
 //! - [FFT の回数を削減するテクニック集](https://noshi91.hatenablog.com/entry/2023/12/10/163348)
 
-use modint::{Modulus, StaticModInt};
+use modint::{ModInt, Modulus};
 use number_theoretic_transform::{NTTFriendly, NumberTheoreticTransform};
 
 pub use sparse::SparsePolynomial;
@@ -14,7 +14,7 @@ mod sparse;
 
 #[derive(Clone)]
 pub struct Polynomial<M> {
-    coeff: Vec<StaticModInt<M>>,
+    coeff: Vec<ModInt<M>>,
 }
 
 impl<M: Modulus> Polynomial<M> {
@@ -30,11 +30,11 @@ impl<M: Modulus> Polynomial<M> {
         self.coeff.len()
     }
 
-    pub fn iter(&self) -> std::slice::Iter<'_, StaticModInt<M>> {
+    pub fn iter(&self) -> std::slice::Iter<'_, ModInt<M>> {
         self.coeff.iter()
     }
 
-    pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, StaticModInt<M>> {
+    pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, ModInt<M>> {
         self.coeff.iter_mut()
     }
 
@@ -180,18 +180,18 @@ impl<M: NTTFriendly> Polynomial<M> {
         f.iter_mut().for_each(|a| *a *= exp);
         let pow = f.exp(precision).unwrap();
 
-        let scale = c.pow(exp as u64);
+        let scale = c.pow(exp);
         std::iter::repeat_n(0.into(), shift.saturating_mul(exp))
             .chain(pow.into_iter().map(|a| a * scale))
             .take(precision)
             .collect()
     }
 
-    pub fn taylor_shift(mut self, shift: impl Into<StaticModInt<M>>) -> Self {
+    pub fn taylor_shift(mut self, shift: impl Into<ModInt<M>>) -> Self {
         let n = self.deg();
         let shift = shift.into();
 
-        let mut coeff = vec![StaticModInt::<M>::one(); n];
+        let mut coeff = vec![ModInt::<M>::one(); n];
         for i in 1..n {
             coeff[i] = coeff[i - 1] * i;
         }
@@ -205,7 +205,7 @@ impl<M: NTTFriendly> Polynomial<M> {
 
         let exp = coeff
             .iter()
-            .scan(StaticModInt::one(), |c, &finv| {
+            .scan(ModInt::one(), |c, &finv| {
                 let a = *c * finv;
                 *c *= &shift;
                 Some(a)
@@ -221,7 +221,7 @@ impl<M: NTTFriendly> Polynomial<M> {
     /// # References
     ///
     /// - [線形漸化的数列のN項目の計算 #アルゴリズム - Qiita](https://qiita.com/ryuhe1/items/da5acbcce4ac1911f47a)
-    pub fn bostan_mori(num: &Self, denom: &Self, mut k: usize) -> StaticModInt<M> {
+    pub fn bostan_mori(num: &Self, denom: &Self, mut k: usize) -> ModInt<M> {
         assert!(num.deg() < denom.deg());
         let ntt_len = (2 * denom.deg() - 1).next_power_of_two();
         let mut p = num.prefix(ntt_len);
@@ -252,7 +252,7 @@ impl<M: NTTFriendly> Polynomial<M> {
 impl<M, T> From<T> for Polynomial<M>
 where
     M: Modulus,
-    T: AsRef<[StaticModInt<M>]>,
+    T: AsRef<[ModInt<M>]>,
 {
     fn from(value: T) -> Self {
         Self {
@@ -264,7 +264,7 @@ where
 impl<M, S> FromIterator<S> for Polynomial<M>
 where
     M: Modulus,
-    S: Into<StaticModInt<M>>,
+    S: Into<ModInt<M>>,
 {
     fn from_iter<T: IntoIterator<Item = S>>(iter: T) -> Self {
         Self::from(iter.into_iter().map(Into::into).collect::<Vec<_>>())
@@ -272,7 +272,7 @@ where
 }
 
 impl<M: Modulus> IntoIterator for Polynomial<M> {
-    type Item = StaticModInt<M>;
+    type Item = ModInt<M>;
     type IntoIter = std::vec::IntoIter<Self::Item>;
 
     fn into_iter(self) -> Self::IntoIter {
@@ -281,8 +281,8 @@ impl<M: Modulus> IntoIterator for Polynomial<M> {
 }
 
 impl<'a, M: Modulus> IntoIterator for &'a Polynomial<M> {
-    type Item = &'a StaticModInt<M>;
-    type IntoIter = std::slice::Iter<'a, StaticModInt<M>>;
+    type Item = &'a ModInt<M>;
+    type IntoIter = std::slice::Iter<'a, ModInt<M>>;
 
     fn into_iter(self) -> Self::IntoIter {
         self.coeff.iter()
@@ -290,8 +290,8 @@ impl<'a, M: Modulus> IntoIterator for &'a Polynomial<M> {
 }
 
 impl<'a, M: Modulus> IntoIterator for &'a mut Polynomial<M> {
-    type Item = &'a mut StaticModInt<M>;
-    type IntoIter = std::slice::IterMut<'a, StaticModInt<M>>;
+    type Item = &'a mut ModInt<M>;
+    type IntoIter = std::slice::IterMut<'a, ModInt<M>>;
 
     fn into_iter(self) -> Self::IntoIter {
         self.coeff.iter_mut()
@@ -304,10 +304,10 @@ impl<M: Modulus> std::fmt::Debug for Polynomial<M> {
     }
 }
 
-pub fn berlekamp_massey<M: Modulus>(a: &[StaticModInt<M>]) -> Polynomial<M> {
-    let mut b = vec![-StaticModInt::raw(1)];
-    let mut c = vec![-StaticModInt::raw(1)];
-    let mut y = StaticModInt::raw(1);
+pub fn berlekamp_massey<M: Modulus>(a: &[ModInt<M>]) -> Polynomial<M> {
+    let mut b = vec![-ModInt::one()];
+    let mut c = vec![-ModInt::one()];
+    let mut y = ModInt::one();
     let mut shift = 0;
     for i in 0..a.len() {
         shift += 1;
@@ -316,7 +316,7 @@ pub fn berlekamp_massey<M: Modulus>(a: &[StaticModInt<M>]) -> Polynomial<M> {
             .rev()
             .zip(&c)
             .map(|(a, c)| a * c)
-            .sum::<StaticModInt<M>>();
+            .sum::<ModInt<M>>();
         if x == 0.into() {
             continue;
         }
@@ -337,8 +337,8 @@ pub fn berlekamp_massey<M: Modulus>(a: &[StaticModInt<M>]) -> Polynomial<M> {
     c.into_iter().skip(1).collect()
 }
 
-fn modinv_table<M: Modulus>(n: usize) -> Vec<StaticModInt<M>> {
-    let mut inv = vec![StaticModInt::raw(0); n + 1];
+fn modinv_table<M: Modulus>(n: usize) -> Vec<ModInt<M>> {
+    let mut inv = vec![ModInt::zero(); n + 1];
     if n > 0 {
         inv[1] = 1.into();
     }

@@ -1,13 +1,13 @@
-use montgomery::simd::*;
+use montgomery::{MontgomeryModInt, simd::*};
 use std::arch::x86_64::{
     _mm256_add_epi32, _mm256_blend_epi32, _mm256_permute2x128_si256, _mm256_permutevar8x32_epi32,
     _mm256_setr_epi32, _mm256_shuffle_epi32, _mm256_sub_epi32,
 };
 
-use super::{ButterflyCache, ModInt, NTTFriendly};
+use super::{ButterflyCache, NTTFriendly};
 
 #[target_feature(enable = "avx2")]
-pub unsafe fn transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
+pub unsafe fn transform_avx2<M: NTTFriendly>(f: &mut [MontgomeryModInt<M>]) {
     let &ButterflyCache {
         ref rate1,
         w1230,
@@ -23,7 +23,7 @@ pub unsafe fn transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
         let block_size = 2 << k;
         let offset = block_size >> 1;
 
-        transform_block::<M, true, true>(&mut f[..], offset, ModInt::one());
+        transform_block::<M, true, true>(&mut f[..], offset, MontgomeryModInt::one());
         let mut w = rate1[0];
         for (i, block) in f.chunks_exact_mut(block_size).enumerate().skip(1) {
             transform_block::<M, true, false>(block, offset, w);
@@ -61,7 +61,7 @@ pub unsafe fn transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
 }
 
 #[target_feature(enable = "avx2")]
-pub unsafe fn inverse_transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
+pub unsafe fn inverse_transform_avx2<M: NTTFriendly>(f: &mut [MontgomeryModInt<M>]) {
     let &ButterflyCache {
         ref irate1,
         iw1230,
@@ -101,7 +101,7 @@ pub unsafe fn inverse_transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
         let block_size = 2 << k;
         let offset = block_size >> 1;
 
-        transform_block::<M, false, true>(&mut f[..], offset, ModInt::one());
+        transform_block::<M, false, true>(&mut f[..], offset, MontgomeryModInt::one());
         let mut w = irate1[0];
         for (i, block) in f.chunks_exact_mut(block_size).enumerate().skip(1) {
             transform_block::<M, false, false>(block, offset, w);
@@ -109,7 +109,7 @@ pub unsafe fn inverse_transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
         }
     }
 
-    let inv_n = ModInt::<M>::new(n as u32).inv();
+    let inv_n = MontgomeryModInt::<M>::new(n as u32).inv();
     let inv_nx8 = broadcast(inv_n.val);
     let ptr = f.as_mut_ptr();
     for i in (0..n).step_by(8) {
@@ -123,9 +123,9 @@ pub unsafe fn inverse_transform_avx2<M: NTTFriendly>(f: &mut [ModInt<M>]) {
 #[inline]
 #[target_feature(enable = "avx2")]
 fn transform_block<M: NTTFriendly, const FORWARD: bool, const TRIVIAL: bool>(
-    block: &mut [ModInt<M>],
+    block: &mut [MontgomeryModInt<M>],
     offset: usize,
-    w: ModInt<M>,
+    w: MontgomeryModInt<M>,
 ) {
     let head: *mut u32 = block.as_mut_ptr().cast();
     let wx8 = broadcast(w.val);
