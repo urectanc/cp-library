@@ -30,6 +30,15 @@ impl<M: Modulus> Polynomial<M> {
         self.coeff.len()
     }
 
+    pub fn normalize(&mut self) {
+        let new_len = self
+            .coeff
+            .iter()
+            .rposition(|&c| c != ModInt::zero())
+            .map_or(0, |i| i + 1);
+        self.coeff.truncate(new_len);
+    }
+
     pub fn iter(&self) -> std::slice::Iter<'_, ModInt<M>> {
         self.coeff.iter()
     }
