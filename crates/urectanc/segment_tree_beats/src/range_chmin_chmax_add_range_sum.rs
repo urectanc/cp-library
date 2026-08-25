@@ -131,8 +131,8 @@ impl BeatsMonoid for RangeChminChmaxAddRangeSum {
     }
 
     fn apply(x: &mut Self::Elem, f: &Self::Map) -> bool {
-        match f {
-            &Act::Chmin(chmin) => {
+        match *f {
+            Act::Chmin(chmin) => {
                 if x.max <= chmin {
                     true
                 } else if x.max2 < chmin {
@@ -142,7 +142,7 @@ impl BeatsMonoid for RangeChminChmaxAddRangeSum {
                     false
                 }
             }
-            &Act::Chmax(chmax) => {
+            Act::Chmax(chmax) => {
                 if x.min >= chmax {
                     true
                 } else if x.min2 > chmax {
@@ -152,7 +152,7 @@ impl BeatsMonoid for RangeChminChmaxAddRangeSum {
                     false
                 }
             }
-            &Act::Add(add) => {
+            Act::Add(add) => {
                 x.add(add);
                 true
             }

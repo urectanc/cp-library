@@ -32,7 +32,7 @@ pub unsafe fn transform_avx2<M: NTTFriendly>(f: &mut [MontgomeryModInt<M>]) {
     }
 
     let mut wx8 = w1230;
-    for (i, chunk) in f.chunks_exact_mut(8).enumerate() {
+    for (i, chunk) in f.as_chunks_mut::<8>().0.iter_mut().enumerate() {
         let w0x8 = _mm256_permutevar8x32_epi32(wx8, _mm256_setr_epi32(7, 0, 7, 1, 7, 2, 7, 3));
         let w1x8 = _mm256_permutevar8x32_epi32(wx8, _mm256_setr_epi32(7, 7, 4, 4, 7, 7, 5, 5));
         let w2x8 = _mm256_permutevar8x32_epi32(wx8, _mm256_setr_epi32(7, 7, 7, 7, 6, 6, 6, 6));
@@ -73,7 +73,7 @@ pub unsafe fn inverse_transform_avx2<M: NTTFriendly>(f: &mut [MontgomeryModInt<M
     assert!(n.is_power_of_two() && n >= 8);
 
     let mut wx8 = iw1230;
-    for (i, chunk) in f.chunks_exact_mut(8).enumerate() {
+    for (i, chunk) in f.as_chunks_mut::<8>().0.iter_mut().enumerate() {
         let w0x8 = _mm256_permutevar8x32_epi32(wx8, _mm256_setr_epi32(7, 0, 7, 1, 7, 2, 7, 3));
         let w1x8 = _mm256_permutevar8x32_epi32(wx8, _mm256_setr_epi32(7, 7, 4, 4, 7, 7, 5, 5));
         let w2x8 = _mm256_permutevar8x32_epi32(wx8, _mm256_setr_epi32(7, 7, 7, 7, 6, 6, 6, 6));

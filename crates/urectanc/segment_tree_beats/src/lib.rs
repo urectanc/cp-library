@@ -127,7 +127,7 @@ where
         let n = a.len();
         let offset = n.next_power_of_two();
         let mut tree = vec![M::identity(); 2 * offset];
-        tree[offset..][..n].clone_from_slice(&a);
+        tree[offset..][..n].clone_from_slice(a);
         let mut beats = Self { n, offset, tree };
         for i in (1..offset).rev() {
             beats.update(i);
