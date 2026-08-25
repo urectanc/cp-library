@@ -1,7 +1,7 @@
 use std::{
     collections::VecDeque,
     iter::{Product, Sum},
-    ops::{Add, AddAssign, Index, IndexMut, Mul, MulAssign, Shl, Shr, Sub, SubAssign},
+    ops::{Add, AddAssign, Div, Index, IndexMut, Mul, MulAssign, Rem, Shl, Shr, Sub, SubAssign},
 };
 
 use modint::{ModInt, Modulus};
@@ -81,6 +81,46 @@ impl<M: NTTFriendly> Mul for &Polynomial<M> {
 impl<M: NTTFriendly> MulAssign for Polynomial<M> {
     fn mul_assign(&mut self, rhs: Self) {
         self.coeff = convolve(&self.coeff, &rhs.coeff);
+    }
+}
+
+impl<M: NTTFriendly> Div for Polynomial<M> {
+    type Output = Polynomial<M>;
+
+    #[allow(clippy::suspicious_arithmetic_impl)]
+    fn div(mut self, mut rhs: Self) -> Self::Output {
+        self.normalize();
+        rhs.normalize();
+        let Some(d) = self.deg().checked_sub(rhs.deg()).map(|d| d + 1) else {
+            return Self::zero();
+        };
+
+        self.coeff.reverse();
+        rhs.coeff.reverse();
+
+        let mut quo = self * rhs.inv(d).unwrap();
+        quo.coeff.truncate(d);
+        quo.coeff.reverse();
+        quo
+    }
+}
+
+impl<M: NTTFriendly> Rem for Polynomial<M> {
+    type Output = Polynomial<M>;
+
+    fn rem(self, rhs: Self) -> Self::Output {
+        let mut rem = self.clone() - self / rhs.clone() * rhs;
+        rem.normalize();
+        rem
+    }
+}
+
+impl<M: NTTFriendly> Polynomial<M> {
+    pub fn div_rem(self, rhs: Self) -> (Self, Self) {
+        let quo = self.clone() / rhs.clone();
+        let mut rem = self - &quo * &rhs;
+        rem.normalize();
+        (quo, rem)
     }
 }
 

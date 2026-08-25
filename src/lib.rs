@@ -29,6 +29,7 @@ pub use rational;
 pub use rerooting;
 pub use rolling_hash;
 pub use segment_tree;
+pub use segment_tree_beats;
 pub use sliding_window_aggregation;
 pub use static_top_tree;
 pub use stern_brocot_tree;

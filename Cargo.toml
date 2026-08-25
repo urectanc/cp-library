@@ -44,6 +44,7 @@ rational = { path = "./crates/urectanc/rational" }
 rerooting = { path = "./crates/urectanc/rerooting" }
 rolling_hash = { path = "./crates/urectanc/rolling_hash" }
 segment_tree = { path = "./crates/urectanc/segment_tree" }
+segment_tree_beats = { path = "./crates/urectanc/segment_tree_beats" }
 sliding_window_aggregation = { path = "./crates/urectanc/sliding_window_aggregation" }
 static_top_tree = { path = "./crates/urectanc/static_top_tree" }
 stern_brocot_tree = { path = "./crates/urectanc/stern_brocot_tree" }
@@ -94,6 +95,7 @@ rational.workspace = true
 rerooting.workspace = true
 rolling_hash.workspace = true
 segment_tree.workspace = true
+segment_tree_beats.workspace = true
 sliding_window_aggregation.workspace = true
 static_top_tree.workspace = true
 stern_brocot_tree.workspace = true
